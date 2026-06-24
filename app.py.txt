@@ -1,0 +1,27 @@
+import streamlit as st
+import pickle
+import pandas as pd
+
+# Load model
+with open("model.pkl", "rb") as file:
+    model = pickle.load(file)
+
+st.title("AI Prediction App")
+
+st.write("Enter the values below:")
+
+# Example inputs
+feature1 = st.number_input("Feature 1")
+feature2 = st.number_input("Feature 2")
+feature3 = st.number_input("Feature 3")
+feature4 = st.number_input("Feature 4")
+
+if st.button("Predict"):
+    data = pd.DataFrame(
+        [[feature1, feature2, feature3, feature4]],
+        columns=["feature1", "feature2", "feature3", "feature4"]
+    )
+
+    prediction = model.predict(data)
+
+    st.success(f"Prediction: {prediction[0]}")
